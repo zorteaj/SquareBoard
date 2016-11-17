@@ -62,7 +62,6 @@ public class GameBoard extends TableLayout {
 
     }
 
-
     public GameBoard(Context context, int numColumns) {
         super(context);
         mNumColumns = numColumns;
@@ -159,8 +158,6 @@ public class GameBoard extends TableLayout {
     // Use this to find top of gameboard, relative to parent frame layout
     // It's not entirely clear to me why I have to do this
     public float getTopPosition() {
-        Log.i(mTag, "Frame padding = " + ((Activity) getContext()).findViewById(R.id.activity_main).getPaddingTop());
-        Log.i(mTag, "Top Position = " + (getTop() - ((Activity) getContext()).findViewById(R.id.activity_main).getPaddingTop()));
        return getTop() - ((Activity) getContext()).findViewById(R.id.activity_main).getPaddingTop();
     }
 }

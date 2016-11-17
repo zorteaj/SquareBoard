@@ -20,6 +20,7 @@ public class Cell extends CardView {
     private int mSize;
     private TableRow.LayoutParams mLayoutParams;
     private LinearLayoutNoClip mLinearLayout;
+    private boolean pickedUp = false;
 
     public static class Coordinates {
         int mX;
@@ -75,6 +76,7 @@ public class Cell extends CardView {
 
     public void addPlayer() {
         Player player = new Player(getContext(), this);
+        putDown();
     }
 
     public void removePlayer(Player player) {
@@ -99,4 +101,16 @@ public class Cell extends CardView {
         float radius = getRadius();
         return (float) (elevation * 1.5 + (1.0 - Math.cos(45)) * radius);
     }
+
+    public void pickUp() {
+        animate().zBy(Settings.CELL_ELEVATION_DELTA);
+        animate().alpha(1.0f);
+        pickedUp = true;
+    }
+
+    public void putDown() {
+        animate().zBy(-1 *Settings.CELL_ELEVATION_DELTA);
+        pickedUp = false;
+    }
+
 }

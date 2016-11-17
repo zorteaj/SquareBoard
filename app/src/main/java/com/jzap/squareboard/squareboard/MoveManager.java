@@ -18,17 +18,17 @@ public abstract class MoveManager {
         mGameBoard = gameBoard;
     }
 
-    public void move(Player player, Cell startCell, float angle) {
+    public void move(Player player, Cell startCell, float angle, Player.FlingSector sector) {
         Move move = determineMove(angle);
         Cell destinationCell = destinationCell(startCell, move);
 
         if(destinationCell != null) {
-            animateMove(player, startCell, destinationCell, move);
+            animateMove(player, startCell, destinationCell, move, sector);
             player.setCell(destinationCell);
         }
     }
 
-    protected abstract void animateMove(Player player, Cell startCell, Cell destinationCell, Move move);
+    protected abstract void animateMove(Player player, Cell startCell, Cell destinationCell, Move move, Player.FlingSector sector);
 
     protected Move determineMove(float angle) {
 
