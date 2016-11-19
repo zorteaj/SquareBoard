@@ -3,7 +3,6 @@ package com.jzap.squareboard.squareboard;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 
 import android.widget.TableRow;
 
@@ -69,17 +68,18 @@ public class Cell extends CardView {
         addView(mLinearLayout);
     }
 
-    public void addPlayer(Player player) {
+    public void addPiece(Piece player) {
         player.setCell(this);
         //addView(player);
     }
 
-    public void addPlayer() {
-        Player player = new Player(getContext(), this);
+    public Piece addPiece(Player player) {
+        Piece piece = new Piece(getContext(), this, player);
         putDown();
+        return piece;
     }
 
-    public void removePlayer(Player player) {
+    public void removePlayer(Piece player) {
         removeView(player);
     }
 

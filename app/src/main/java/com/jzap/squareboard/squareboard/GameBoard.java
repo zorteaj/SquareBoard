@@ -19,6 +19,7 @@ public class GameBoard extends TableLayout {
 
     private static final String mTag = "JZAP: GameBoard";
 
+    private GameManager mGameManager;
     private MoveManager mMoveManager;
     private int mNumColumns;
     private int mNumRows;
@@ -62,8 +63,9 @@ public class GameBoard extends TableLayout {
 
     }
 
-    public GameBoard(Context context, int numColumns) {
+    public GameBoard(GameManager gameManager, Context context, int numColumns) {
         super(context);
+        mGameManager = gameManager;
         mNumColumns = numColumns;
         preLayoutSetUp();
     }
@@ -133,6 +135,10 @@ public class GameBoard extends TableLayout {
 
     public boolean getReady() {
         return mReady;
+    }
+
+    public GameManager getGameManager() {
+        return mGameManager;
     }
 
     public int getCellSize() {

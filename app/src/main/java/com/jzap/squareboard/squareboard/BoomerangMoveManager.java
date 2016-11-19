@@ -16,7 +16,7 @@ public class BoomerangMoveManager extends MoveManager {
         super(gameBoard);
     }
 
-    protected void animateMove(Player player, Cell startCell, final Cell destinationCell, Move move, Player.FlingSector sector) {
+    protected void animateMove(Piece player, Cell startCell, final Cell destinationCell, Move move, Piece.FlingSector sector) {
 
 
         final FrameLayout mainLayout = (FrameLayout) mGameBoard.getParent();

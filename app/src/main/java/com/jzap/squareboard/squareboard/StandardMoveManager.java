@@ -1,10 +1,8 @@
 package com.jzap.squareboard.squareboard;
 
 import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.util.Log;
 import android.view.ViewPropertyAnimator;
-import android.view.animation.Animation;
 import android.widget.FrameLayout;
 
 /**
@@ -17,7 +15,7 @@ public class StandardMoveManager extends MoveManager {
         super(gameBoard);
     }
 
-    protected void animateMove(Player player, final Cell startCell, final Cell destinationCell, Move move, Player.FlingSector sector) {
+    protected void animateMove(Piece player, final Cell startCell, final Cell destinationCell, Move move, Piece.FlingSector sector) {
         FrameLayout mainLayout = (FrameLayout) mGameBoard.getParent();
         GameBoard.GameRow gameRow = ((GameBoard.GameRow)destinationCell.getParent());
 
@@ -58,7 +56,7 @@ public class StandardMoveManager extends MoveManager {
         animator.start();
     }
 
-    private int getRotation(Player.FlingSector sector) {
+    private int getRotation(Piece.FlingSector sector) {
         int rotation = 0;
         switch (sector){
             case TOP : rotation = 360;

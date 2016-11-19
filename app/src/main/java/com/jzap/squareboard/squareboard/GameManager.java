@@ -10,35 +10,82 @@ import android.os.Message;
 
 public class GameManager {
 
-    MainActivity mMainActivity;
+    private static final String mTag = "JZAP: GameManager";
+
+    private MainActivity mMainActivity;
     private Handler mHandler;
-    GameBoard mGameBoard;
+    private GameBoard mGameBoard;
+    private RulesManager mRulesManager;
+    private Player mPlayers[] = new Player[2];
+    private GameState mGameState;
+
+
+    class GameState {
+        private Player mTurn;
+
+        public GameState() {}
+
+        public void setTurn(Player player) {
+            mTurn = player;
+        }
+
+        public Player getTurn() {
+            return mTurn;
+        }
+    }
 
     GameManager(MainActivity mainActivity)
     {
         mMainActivity = mainActivity;
+        mGameState = new GameState();
         setUp();
     }
 
     private void setUp() {
+        // Don't work with the GameBoard until it's ready
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message inputMessage) {
-                mGameBoard.cellAtCoordinates(new Cell.Coordinates(0, 0)).addPlayer();
-                mGameBoard.cellAtCoordinates(new Cell.Coordinates(1, 1)).addPlayer();
+                mPlayers[0] = new Player(GameManager.this, "Top");
+                mPlayers[0].addPiece(new Cell.Coordinates(0, 0));
+
+                mPlayers[1] = new Player(GameManager.this, "Bottom");
+                mPlayers[1].addPiece(new Cell.Coordinates(5, 3));
+
+                mGameState.setTurn(mPlayers[0]);
             }
         };
 
-        mGameBoard = new GameBoard(mMainActivity, Settings.NUM_BOARD_COLUMNS);
+        mGameBoard = new GameBoard(this, mMainActivity, Settings.NUM_BOARD_COLUMNS);
         mMainActivity.getMainLayout().addView(mGameBoard);
+        mRulesManager = new RulesManager(mMainActivity);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(!mGameBoard.getReady()){};
+                while(!mGameBoard.getReady()){}
                 mHandler.obtainMessage().sendToTarget();
             }
         }).start();
     }
 
+    public RulesManager getRulesManager() {
+        return mRulesManager;
+    }
+
+    public GameBoard getGameBoard() {
+        return mGameBoard;
+    }
+
+    public GameState getGameState() {
+        return mGameState;
+    }
+
+    public void switchTurn() {
+        if(mGameState.getTurn() == mPlayers[0]) {
+            mGameState.setTurn(mPlayers[1]);
+        } else {
+            mGameState.setTurn(mPlayers[0]);
+        }
+    }
 }

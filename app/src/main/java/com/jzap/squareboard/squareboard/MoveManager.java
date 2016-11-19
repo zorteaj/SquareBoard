@@ -18,7 +18,7 @@ public abstract class MoveManager {
         mGameBoard = gameBoard;
     }
 
-    public void move(Player player, Cell startCell, float angle, Player.FlingSector sector) {
+    public void move(Piece player, Cell startCell, float angle, Piece.FlingSector sector) {
         Move move = determineMove(angle);
         Cell destinationCell = destinationCell(startCell, move);
 
@@ -28,7 +28,7 @@ public abstract class MoveManager {
         }
     }
 
-    protected abstract void animateMove(Player player, Cell startCell, Cell destinationCell, Move move, Player.FlingSector sector);
+    protected abstract void animateMove(Piece player, Cell startCell, Cell destinationCell, Move move, Piece.FlingSector sector);
 
     protected Move determineMove(float angle) {
 
