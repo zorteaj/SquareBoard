@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 public class RulesManager {
 
     private static final String mTag = "JZAP: Rules Manager";
+    public enum RuleType {INTEGER}
 
     MainActivity mMainActivity;
     // TODO: It would probably be better to separate the UI logic from the rules management logic
@@ -57,8 +58,11 @@ public class RulesManager {
         mMainLayout.removeView(mMainCard);
     }
 
-    public RuleProperty addRuleProperty(Handler handler) {
-        return new RuleProperty(this, handler);
+    public RuleProperty addRuleProperty(boolean publishUpdates, Handler handler, RuleType ruleType) {
+        if(ruleType == RuleType.INTEGER) {
+            return new IntegerRuleProperty(this, publishUpdates, handler);
+        }
+        return null;
     }
 
     public MainActivity getMainActivity() {

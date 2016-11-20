@@ -31,7 +31,7 @@ public class Piece extends CardView {
     private boolean pickedUp = false;
     private GestureDetector mGestureDetector;
     private Cell mCell;
-    RuleProperty mColor;
+    IntegerRuleProperty mColor;
     private Handler mHandler;
     private Player mPlayer;
 
@@ -70,7 +70,7 @@ public class Piece extends CardView {
             public void handleMessage(Message inputMessage) {
                 Log.i(mTag, "GOT A MESSAGE");
                 // TODO: Obviously we want the color actually passed in the message
-                setCardBackgroundColor(Color.RED);
+                setCardBackgroundColor(((IntegerRuleProperty)inputMessage.obj).getValue());
             }
         };
 
@@ -78,7 +78,14 @@ public class Piece extends CardView {
 
     private void setUpAttributes() {
         //setCardBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.holo_orange_light));
+
+
         setCardBackgroundColor(mColor.getValue());
+
+
+
+
+
         setUseCompatPadding(true);
         setClipToOutline(false);
         setElevation(20.0f);
@@ -107,7 +114,7 @@ public class Piece extends CardView {
     }
 
     private void setUpRules() {
-        mColor = mCell.getGameBoard().getGameManager().getRulesManager().addRuleProperty(getHandler());
+        mColor = (IntegerRuleProperty) mCell.getGameBoard().getGameManager().getRulesManager().addRuleProperty(true, getHandler(), RulesManager.RuleType.INTEGER);
     }
 
     private void pickUp() {

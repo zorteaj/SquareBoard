@@ -13,34 +13,19 @@ import android.widget.RadioButton;
 
 public class RuleProperty {
 
-    //View mView;
-    private RulesManager mRulesManager;
-    private RadioButton mButton;
-    Handler mHandler;
+    protected RulesManager mRulesManager;
+    // Whether or not to message this rule's user in real-time when the rule is updated
+    protected boolean mPublishUpdates;
+    protected Handler mHandler;
 
-    public RuleProperty(RulesManager rulesManager, Handler handler) {
+    public RuleProperty(RulesManager rulesManager, boolean publishUpdates) {
+        this(rulesManager, publishUpdates, null);
+    }
+
+    public RuleProperty(RulesManager rulesManager, boolean publishUpdates, Handler handler) {
         mRulesManager = rulesManager;
+        mPublishUpdates = publishUpdates;
         mHandler = handler;
-
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mButton = new RadioButton(mRulesManager.getMainActivity());
-        mButton.setLayoutParams(lp);
-
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mHandler.obtainMessage().sendToTarget();
-            }
-        });
-
-        mRulesManager.getMainLayout().addView(mButton);
     }
 
-    public int getValue() {
-        if(mButton.isChecked()) {
-            return Color.RED;
-        } else {
-            return Color.BLUE;
-        }
-    }
 }
